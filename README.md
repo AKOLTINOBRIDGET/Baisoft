@@ -30,3 +30,13 @@ Styling: Tailwind CSS (for responsive, utility-first design)
 State Management: React Context API (for Auth and Permissions)
 
 Icons/UI: Custom CSS & Radix-style UI patterns
+
+
+Credentials
+ 'superadmin@example.com', password: 'admin123', role: 'super_admin', name: 'Super Admin',
+   'business@example.com', password: 'business123', role: 'business_admin', name: 'Business Admin', businessId: 'business-1' ,
+  'editor@example.com', password: 'editor123', role: 'editor', name: 'Editor User', businessId: 'business-1' ,
+   'approver@example.com', password: 'approver123', role: 'approver', name: 'Approver User', businessId: 'business-1' ,
+  'viewer@example.com', password: 'viewer123', role: 'viewer', name: 'Viewer User', businessId: 'business-1' 
+
+
