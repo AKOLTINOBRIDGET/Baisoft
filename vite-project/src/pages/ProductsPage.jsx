@@ -17,7 +17,6 @@ export default function ProductsPage() {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Requirement: Permissions Awareness
   const canCreate = ['super_admin', 'business_admin', 'editor'].includes(user?.role);
   const canApprove = ['super_admin', 'approver'].includes(user?.role);
   const canEdit = ['super_admin', 'business_admin', 'editor'].includes(user?.role);
@@ -31,7 +30,6 @@ export default function ProductsPage() {
   const filteredProducts = products.filter(p => 
     (p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.category.toLowerCase().includes(searchTerm.toLowerCase())) &&
-    // Internal users see all products for their business; Super Admins see all
     (user?.role === 'super_admin' || p.business === user?.businessName)
   );
 

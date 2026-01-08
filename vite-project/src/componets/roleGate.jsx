@@ -1,6 +1,3 @@
-// ============================================
-// ROLE GATE COMPONENT (for inline use)
-// ============================================
 import { useAuth } from "./authcontext";
 
 export const RoleGate = ({ 

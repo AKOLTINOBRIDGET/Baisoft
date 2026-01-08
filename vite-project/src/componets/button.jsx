@@ -1,11 +1,6 @@
 
 
 import { COLORS } from "./colors";
-
-
-// ============================================
-// BUTTON COMPONENT
-// ============================================
 export const Button = ({ 
   children, 
   variant = 'primary', 

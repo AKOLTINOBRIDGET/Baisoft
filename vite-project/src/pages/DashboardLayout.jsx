@@ -70,7 +70,6 @@ const DashboardLayout = () => {
         <main className="flex-1 overflow-y-auto">
           <DashboardWrapper>
             
-            {/* Conditional Stats Section: Only shows on the main Dashboard Home */}
             {location.pathname === '/dashboard' && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <StatCard title="Total Products" value="128" icon="📦" trend="+12% from last month" />
@@ -81,7 +80,6 @@ const DashboardLayout = () => {
               </div>
             )}
 
-            {/* Sub-pages like BusinessManagement and ProductsPage inject here */}
             <Outlet />
           </DashboardWrapper>
         </main>
@@ -90,9 +88,7 @@ const DashboardLayout = () => {
   );
 };
 
-/**
- * Helper Component for the Dashboard Stats
- */
+
 const StatCard = ({ title, value, icon, trend }) => (
   <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow">
     <div className="flex items-center justify-between mb-4">

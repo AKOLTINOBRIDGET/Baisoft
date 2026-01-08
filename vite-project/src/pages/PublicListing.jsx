@@ -1,8 +1,6 @@
-// src/pages/PublicListing.jsx
 import { COLORS } from '../componets/colors';
 
 export const PublicListing = ({ products }) => {
-  // Requirement: Show only approved products
   const approvedProducts = products.filter(p => p.status === 'approved');
 
   return (

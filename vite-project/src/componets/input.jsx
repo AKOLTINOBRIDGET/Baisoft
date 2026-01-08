@@ -1,9 +1,4 @@
-//INPUT COMPONENT
-
 import { COLORS } from "./colors";
-
-// ============================================
-
 export const Input = ({ 
   label,
   type = 'text',

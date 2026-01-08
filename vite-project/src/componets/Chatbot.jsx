@@ -9,13 +9,7 @@ export const Chatbot = ({ products }) => {
     const userMsg = { role: 'user', text: input, timestamp: new Date() };
     setMessages([...messages, userMsg]);
     
-    // Logic: Chatbot queries the products
-    // Filter approved products only for public queries
-    // const availableData = products.filter(p => p.status === 'approved');
-    
-    // Here you would call your OpenAI/Grok API
-    // const aiResponse = await callAI(input, availableData);
-  };
+      };
 
   return (
     <div className="fixed bottom-6 right-6 w-80 bg-white shadow-2xl rounded-2xl border border-gray-200 flex flex-col h-96 z-50">

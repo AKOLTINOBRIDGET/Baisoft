@@ -1,5 +1,3 @@
-// TEXTAREA COMPONENT
-// ============================================
 import { COLORS } from "./colors";
 
 export const TextArea = ({ 

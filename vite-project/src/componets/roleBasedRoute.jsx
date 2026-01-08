@@ -1,5 +1,3 @@
-// ROLE-BASED ROUTE COMPONENT
-// ============================================
 import { useAuth } from "./authcontext";
 
 export const RoleBasedRoute = ({ 

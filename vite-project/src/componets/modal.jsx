@@ -1,5 +1,3 @@
-// MODAL COMPONENT
-// ============================================
 import { COLORS } from "./colors";
 
 export const Modal = ({ 

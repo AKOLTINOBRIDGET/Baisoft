@@ -1,8 +1,4 @@
-// PERMISSION GATE COMPONENT (for inline use)
-
 import { useAuth } from "./authcontext";
-
-// ============================================
 export const PermissionGate = ({ 
   children, 
   permission = null,

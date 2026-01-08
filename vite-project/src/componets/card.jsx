@@ -1,5 +1,4 @@
-// CARD COMPONENT
-// ============================================
+
 import { COLORS } from "./colors";
 
 export const Card = ({ 

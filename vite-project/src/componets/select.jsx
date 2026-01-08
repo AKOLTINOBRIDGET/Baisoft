@@ -1,5 +1,3 @@
-// SELECT COMPONENT
-// ============================================
 import { COLORS } from "./colors";
 
 export const Select = ({ 

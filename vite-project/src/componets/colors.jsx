@@ -1,4 +1,3 @@
-// import React, { useState } from 'react';
 
 // Theme colors constant
 export const COLORS = {
