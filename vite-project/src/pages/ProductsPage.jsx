@@ -3,6 +3,7 @@ import { COLORS } from "../componets/colors";
 import { Button } from '../componets/button';
 import { Modal } from '../componets/modal';
 import { Badge } from '../componets/badge';
+import { Card } from '../componets/card';
 import { useAuth } from '../contexts/AuthContext';
 
 const MOCK_PRODUCTS = [
@@ -63,48 +64,36 @@ export default function ProductsPage() {
         <QuickStat label="Drafts" value={filteredProducts.filter(p => p.status === 'draft').length} color="#6B7280" />
       </div>
 
-      {/* Table Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-gray-50 text-gray-600 text-xs uppercase font-semibold">
-              <tr>
-                <th className="px-6 py-4">Product Info</th>
-                <th className="px-6 py-4">Price</th>
-                <th className="px-6 py-4">Status</th>
-                <th className="px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {filteredProducts.map((product) => (
-                <tr key={product.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4">
-                    <p className="font-bold text-gray-800">{product.name}</p>
-                    <p className="text-xs text-gray-500">{product.category}</p>
-                  </td>
-                  <td className="px-6 py-4 font-medium">${product.price}</td>
-                  <td className="px-6 py-4">
-                    <Badge variant={product.status === 'approved' ? 'active' : 'inactive'}>
-                      {product.status.replace('_', ' ')}
-                    </Badge>
-                  </td>
-                  <td className="px-6 py-4 text-right space-x-2">
-                    {/* Role-Based Approval Action */}
-                    {canApprove && product.status === 'pending_approval' && (
-                      <button 
-                        onClick={() => handleApprove(product.id)}
-                        className="text-green-600 hover:bg-green-50 px-3 py-1 rounded border border-green-200 text-sm font-bold"
-                      >
-                        Approve
-                      </button>
-                    )}
-                    {canEdit && <button className="p-1 hover:bg-gray-100 rounded text-blue-600">✏️</button>}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* Products Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredProducts.map((product) => (
+          <Card key={product.id} padding="normal" className="relative">
+            <div className="flex justify-between items-start mb-3">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
+                <p className="text-sm text-gray-500">{product.category}</p>
+              </div>
+              <Badge variant={product.status === 'approved' ? 'success' : product.status === 'pending_approval' ? 'warning' : 'default'}>
+                {product.status.replace('_', ' ')}
+              </Badge>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">{product.description}</p>
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="text-2xl font-bold text-gray-800">${product.price}</p>
+                <p className="text-xs text-gray-500">Stock: {product.stock}</p>
+              </div>
+              <div className="flex space-x-2">
+                {canApprove && product.status === 'pending_approval' && (
+                  <Button size="small" onClick={() => handleApprove(product.id)}>Approve</Button>
+                )}
+                {canEdit && (
+                  <Button variant="outline" size="small">Edit</Button>
+                )}
+              </div>
+            </div>
+          </Card>
+        ))}
       </div>
       
       {/* Product Form Modal (Simplified) */}
@@ -117,8 +106,8 @@ export default function ProductsPage() {
 }
 
 const QuickStat = ({ label, value, color }) => (
-  <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+  <Card padding="normal" className="text-center">
     <p className="text-xs font-semibold text-gray-400 uppercase">{label}</p>
     <p className="text-2xl font-bold mt-1" style={{ color }}>{value}</p>
-  </div>
+  </Card>
 );
