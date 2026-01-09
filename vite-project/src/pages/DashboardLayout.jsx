@@ -70,15 +70,7 @@ const DashboardLayout = () => {
         <main className="flex-1 overflow-y-auto">
           <DashboardWrapper>
             
-            {location.pathname === '/dashboard' && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <StatCard title="Total Products" value="128" icon="📦" trend="+12% from last month" />
-                <StatCard title="Active Users" value="42" icon="👥" trend="5 currently online" />
-                {user?.role === 'super_admin' && (
-                  <StatCard title="Businesses" value="12" icon="🏢" trend="2 pending approval" />
-                )}
-              </div>
-            )}
+
 
             <Outlet />
           </DashboardWrapper>
@@ -89,17 +81,6 @@ const DashboardLayout = () => {
 };
 
 
-const StatCard = ({ title, value, icon, trend }) => (
-  <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow">
-    <div className="flex items-center justify-between mb-4">
-      <h3 className="font-semibold text-gray-400 text-xs uppercase tracking-widest">{title}</h3>
-      <span className="text-2xl">{icon}</span>
-    </div>
-    <div className="flex items-baseline space-x-2">
-      <p className="text-3xl font-bold text-gray-800">{value}</p>
-    </div>
-    <p className="text-xs mt-2 text-green-600 font-medium">{trend}</p>
-  </div>
-);
+
 
 export default DashboardLayout;

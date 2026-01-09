@@ -3,9 +3,10 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./componets/protectedRoute";
 
 import DashboardLayout from "./pages/DashboardLayout";
+import DashboardHome from "./pages/DashboardHome";
 import LoginPage from "./pages/loginPage";
 import BusinessManagement from "./pages/BusinessManagement";
-import ProductsPage from "./pages/ProductsPage"; // You can create this next
+import ProductsPage from "./pages/ProductsPage";
 
 export default function App() {
   return (
@@ -45,10 +46,4 @@ export default function App() {
   );
 }
 
-// Simple internal component for the "Dashboard" home view
-const DashboardHome = () => (
-  <div className="bg-white rounded-lg shadow-md p-6 border border-gray-100">
-    <h3 className="text-xl font-semibold mb-3">Welcome to your Overview! 👋</h3>
-    <p className="text-gray-600">Select a category from the sidebar to manage your data.</p>
-  </div>
-);
+

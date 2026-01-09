@@ -1,4 +1,4 @@
-import { COLORS } from '../componets/colors';
+import { COLORS } from '../components/colors';
 
 export const PublicListing = ({ products }) => {
   const approvedProducts = products.filter(p => p.status === 'approved');

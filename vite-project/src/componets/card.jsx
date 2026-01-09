@@ -1,12 +1,23 @@
 
+import { memo } from 'react';
 import { COLORS } from "./colors";
 
-export const Card = ({ 
-  children, 
-  title, 
+/**
+ * Card container component with optional title and subtitle
+ * @param {Object} props - Component props
+ * @param {ReactNode} props.children - Card content
+ * @param {string} [props.title] - Card title
+ * @param {string} [props.subtitle] - Card subtitle
+ * @param {string} [props.padding='normal'] - Padding size variant
+ * @param {string} [props.className=''] - Additional CSS classes
+ * @returns {JSX.Element} Card component with content
+ */
+export const Card = memo(({
+  children,
+  title,
   subtitle,
   padding = 'normal',
-  className = '' 
+  className = ''
 }) => {
   const paddings = {
     none: '',
@@ -26,4 +37,4 @@ export const Card = ({
       {children}
     </div>
   );
-};
+});

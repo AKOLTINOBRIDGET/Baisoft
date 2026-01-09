@@ -27,4 +27,5 @@ export const Badge = ({
   );
 };
 
-// ============================================
+Badge.displayName = 'Badge';
+

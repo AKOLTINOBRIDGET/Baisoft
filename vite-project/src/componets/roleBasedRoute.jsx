@@ -1,7 +1,16 @@
-import { useAuth } from "./authcontext";
+import { useAuth } from "../contexts/AuthContext";
 
-export const RoleBasedRoute = ({ 
-  children, 
+/**
+ * Route protection based on user roles
+ * @param {Object} props - Component props
+ * @param {ReactNode} props.children - Protected content
+ * @param {string[]} [props.allowedRoles=[]] - Array of allowed role strings
+ * @param {ReactNode} [props.fallback] - Fallback component for unauthorized access
+ * @param {Function} [props.onUnauthorized] - Callback when access is denied
+ * @returns {ReactNode} Children or fallback based on role authorization
+ */
+export const RoleBasedRoute = ({
+  children,
   allowedRoles = [],
   fallback = null,
   onUnauthorized = null

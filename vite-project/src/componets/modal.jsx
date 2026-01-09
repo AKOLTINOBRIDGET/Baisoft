@@ -1,9 +1,21 @@
+import { memo } from 'react';
 import { COLORS } from "./colors";
 
-export const Modal = ({ 
-  isOpen, 
-  onClose, 
-  title, 
+/**
+ * Modal dialog component with overlay and customizable content
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether modal is visible
+ * @param {Function} props.onClose - Function to close modal
+ * @param {string} [props.title] - Modal title
+ * @param {ReactNode} props.children - Modal content
+ * @param {ReactNode} [props.footer] - Modal footer content
+ * @param {string} [props.size='medium'] - Modal size variant
+ * @returns {JSX.Element|null} Modal component or null if not open
+ */
+export const Modal = memo(({
+  isOpen,
+  onClose,
+  title,
   children,
   footer,
   size = 'medium'
@@ -54,4 +66,4 @@ export const Modal = ({
       </div>
     </div>
   );
-};
+});

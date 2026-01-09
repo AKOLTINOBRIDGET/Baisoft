@@ -1,31 +1,19 @@
-import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
+import { createContext, useContext, useState, useMemo, useCallback } from 'react';
+import { ROLE_PERMISSIONS } from '../constants/permissions';
 
 const AuthContext = createContext(null);
 
-// Custom hook for easy access
+/**
+ * Custom hook for accessing authentication context
+ * @returns {Object} Authentication context with user data and methods
+ * @throws {Error} If used outside of AuthProvider
+ */
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-};
-
-// Permission definitions
-const ROLE_PERMISSIONS = {
-  super_admin: [
-    'manage_businesses', 'create_users', 'edit_users', 'delete_users',
-    'assign_roles', 'create_products', 'edit_products', 'delete_products',
-    'approve_products', 'view_all_products'
-  ],
-  business_admin: [
-    'create_users', 'edit_users', 'delete_users', 'assign_roles',
-    'create_products', 'edit_products', 'delete_products',
-    'approve_products', 'view_all_products'
-  ],
-  editor: ['create_products', 'edit_products', 'view_all_products'],
-  approver: ['approve_products', 'view_all_products'],
-  viewer: ['view_products']
 };
 
 export const AuthProvider = ({ children }) => {
@@ -43,8 +31,6 @@ export const AuthProvider = ({ children }) => {
     }
     return null;
   });
-
-  const [loading, setLoading] = useState(false);
 
   // 2. Permission Helpers (Memoized for performance)
   const hasPermission = useCallback((permission) => {
@@ -76,7 +62,6 @@ export const AuthProvider = ({ children }) => {
   // 4. Memoize the context value to prevent unnecessary re-renders of children
   const value = useMemo(() => ({
     user,
-    loading,
     login,
     logout,
     hasPermission,
@@ -85,11 +70,11 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: !!user,
     isSuperAdmin: user?.role === 'super_admin',
     isBusinessAdmin: user?.role === 'business_admin'
-  }), [user, loading, hasPermission, hasAnyPermission, hasAllPermissions]);
+  }), [user, hasPermission, hasAnyPermission, hasAllPermissions]);
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };

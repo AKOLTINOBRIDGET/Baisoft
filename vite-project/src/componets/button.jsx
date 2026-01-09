@@ -1,9 +1,24 @@
 
 
+import { memo } from 'react';
 import { COLORS } from "./colors";
-export const Button = ({ 
-  children, 
-  variant = 'primary', 
+
+/**
+ * Button component with multiple variants and sizes
+ * @param {Object} props - Component props
+ * @param {ReactNode} props.children - Button content
+ * @param {string} [props.variant='primary'] - Button style variant
+ * @param {string} [props.size='medium'] - Button size variant
+ * @param {boolean} [props.fullWidth=false] - Whether button should be full width
+ * @param {boolean} [props.disabled=false] - Whether button is disabled
+ * @param {Function} [props.onClick] - Click handler function
+ * @param {string} [props.type='button'] - Button type attribute
+ * @param {string} [props.className=''] - Additional CSS classes
+ * @returns {JSX.Element} Button element
+ */
+export const Button = memo(({
+  children,
+  variant = 'primary',
   size = 'medium',
   fullWidth = false,
   disabled = false,
@@ -39,4 +54,4 @@ export const Button = ({
       {children}
     </button>
   );
-};
+});

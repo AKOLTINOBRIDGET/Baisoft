@@ -1,4 +1,4 @@
-import { useAuth } from "./authcontext";
+import { useAuth } from "../contexts/AuthContext";
 
 export const RoleGate = ({ 
   children, 
