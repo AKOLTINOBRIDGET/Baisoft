@@ -46,7 +46,7 @@ export default function Sidebar({ isOpen, onClose, user, currentPath }) {
         {/* Logo Section */}
         <div className="h-16 flex items-center justify-between px-6 border-b border-gray-100 shrink-0">
           <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="Baisoft Logo" className="w-8 h-8 object-contain" />
+            <img src="/logo.png" alt="MMPlaza Logo" className="w-8 h-8 object-contain" />
             <h2 className="text-xl font-bold font-display text-brand-text">ProductHub</h2>
           </div>
           <button onClick={onClose} className="lg:hidden text-brand-muted hover:text-brand-text">

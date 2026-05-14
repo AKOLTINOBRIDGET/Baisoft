@@ -125,8 +125,8 @@ export default function StorefrontPage() {
         {selectedProduct && (
           <div className="flex flex-col md:flex-row gap-8">
             <div className="w-full md:w-1/2">
-              <div className="aspect-square bg-surface-secondary rounded-2xl flex items-center justify-center text-8xl relative">
-                📦
+              <div className="aspect-square bg-surface-secondary rounded-2xl flex items-center justify-center relative overflow-hidden">
+                <img src="/logo.png" alt="Product Placeholder" className="w-1/2 h-1/2 object-contain opacity-30 grayscale" />
                 {selectedProduct.featured && (
                   <Badge variant="brand" className="absolute top-4 left-4">Featured</Badge>
                 )}

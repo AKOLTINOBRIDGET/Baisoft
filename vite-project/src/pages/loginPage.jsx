@@ -75,10 +75,10 @@ export default function LoginPage() {
         <div className="card p-8">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-24 h-24 mb-4">
-              <img src="/logo.png" alt="Baisoft Logo" className="w-full h-full object-contain" />
+              <img src="/logo.png" alt="MMPlaza Logo" className="w-full h-full object-contain" />
             </div>
             <h1 className="text-3xl font-bold font-display text-brand-text mb-2">Welcome Back</h1>
-            <p className="text-brand-muted">Sign in to Baisoft ProductHub</p>
+            <p className="text-brand-muted">Sign in to MMPlaza ProductHub</p>
           </div>
 
           {alert && (

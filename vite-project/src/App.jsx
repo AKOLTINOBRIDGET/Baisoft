@@ -5,6 +5,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import DashboardLayout from "./pages/DashboardLayout";
 import DashboardHome from "./pages/DashboardHome";
+import SplashScreen from "./pages/SplashScreen";
 import LoginPage from "./pages/LoginPage";
 import BusinessManagement from "./pages/BusinessManagement";
 import ProductsPage from "./pages/ProductsPage";
@@ -25,6 +26,7 @@ export default function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<StorefrontPage />} />
+            <Route path="/splash" element={<SplashScreen />} />
             <Route path="/login" element={<LoginPage />} />
             
             {/* Buyer Protected Routes */}
