@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #F7F8FA;
+    color: #212121;
+  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #F1F1F1; }
+  ::-webkit-scrollbar-thumb { background: #C1C1C1; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #A8A8A8; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-brand-green text-white font-semibold text-sm transition-all duration-200 hover:bg-brand-green-dark hover:shadow-green active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl border-2 border-brand-green text-brand-green font-semibold text-sm transition-all duration-200 hover:bg-brand-green hover:text-white active:scale-95;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-brand-text font-medium text-sm transition-all duration-200 hover:bg-gray-100 active:scale-95;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-brand-error text-white font-semibold text-sm transition-all duration-200 hover:bg-red-700 active:scale-95;
+  }
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-brand-text placeholder-brand-muted text-sm transition-all duration-200 focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-card border border-gray-100/80;
+  }
+  .card-hover {
+    @apply card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+  .badge-success {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800;
+  }
+  .badge-warning {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800;
+  }
+  .badge-error {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800;
+  }
+  .badge-default {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-700;
+  }
+  .section-header {
+    @apply text-2xl font-bold font-display text-brand-text;
+  }
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
