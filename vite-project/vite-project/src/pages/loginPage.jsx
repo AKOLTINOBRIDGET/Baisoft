@@ -1,77 +1,20 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext'; // Ensure this path is correct
-import { COLORS } from "../componets/colors"; // Fixed "componets" typo
-
-
-const Alert = ({ children, variant = 'info', onClose, className = '' }) => {
-  const variants = {
-    success: { bg: 'bg-green-50', border: 'border-green-200', text: 'text-green-800', icon: '✓' },
-    error: { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-800', icon: '✕' },
-    warning: { bg: 'bg-yellow-50', border: 'border-yellow-200', text: 'text-yellow-800', icon: '⚠' },
-    info: { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-800', icon: 'ℹ' }
-  };
-  const style = variants[variant] || variants.info;
-  return (
-    <div className={`${style.bg} border ${style.border} rounded-lg p-4 ${className}`}>
-      <div className="flex items-start">
-        <span className={`${style.text} font-bold mr-3`}>{style.icon}</span>
-        <div className={`flex-1 ${style.text}`}>{children}</div>
-        {onClose && (
-          <button onClick={onClose} className={`${style.text} ml-3 hover:opacity-70`}>
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
-          </button>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const FormInput = ({ label, type = 'text', name, value, onChange, placeholder, error, icon, autoComplete }) => (
-  <div className="mb-4">
-    <label className="block text-sm font-medium mb-2" style={{ color: COLORS.text }}>{label}</label>
-    <div className="relative">
-      {icon && (
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-          {icon}
-        </div>
-      )}
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        className={`w-full ${icon ? 'pl-10' : 'px-4'} pr-4 py-3 rounded-lg border-2 transition-all focus:outline-none ${
-          error ? 'border-red-500 focus:border-red-600' : 'border-gray-300 focus:border-[#00C853]'
-        }`}
-      />
-    </div>
-    {error && <p className="mt-1 text-sm text-red-500 font-medium">{error}</p>}
-  </div>
-);
-
-
-const MOCK_USERS = [
-  { email: 'superadmin@example.com', password: 'admin123', role: 'super_admin', name: 'Super Admin' },
-  { email: 'business@example.com', password: 'business123', role: 'business_admin', name: 'Business Admin', businessId: 'business-1' },
-  { email: 'editor@example.com', password: 'editor123', role: 'editor', name: 'Editor User', businessId: 'business-1' },
-  { email: 'approver@example.com', password: 'approver123', role: 'approver', name: 'Approver User', businessId: 'business-1' },
-  { email: 'viewer@example.com', password: 'viewer123', role: 'viewer', name: 'Viewer User', businessId: 'business-1' }
-];
+import { useAuth } from '../contexts/AuthContext';
+import { MOCK_USERS } from '../data/mockData';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { Alert } from '../components/ui/Alert';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,23 +24,20 @@ export default function LoginPage() {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = 'Valid email is required';
+    
+    if (!formData.password) newErrors.password = 'Password is required';
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    if (e) e.preventDefault();
     setAlert(null);
     if (!validateForm()) return;
+    
     setLoading(true);
 
     setTimeout(() => {
@@ -106,40 +46,39 @@ export default function LoginPage() {
       );
 
       if (userFound) {
-        const userData = {
-          id: Math.random().toString(36).substr(2, 9),
-          name: userFound.name,
-          email: userFound.email,
-          role: userFound.role,
-          businessId: userFound.businessId || null
-        };
+        const userData = { ...userFound, id: Math.random().toString(36).substr(2, 9) };
+        delete userData.password; // Don't store password in local state
         
-        // Log in via Context (this handles localStorage for you)
         login('mock-jwt-token-' + Date.now(), userData);
         
-        setAlert({ type: 'success', message: 'Login successful! Redirecting...' });
-        setTimeout(() => navigate('/dashboard'), 1500);
+        setAlert({ type: 'success', message: 'Welcome back! Redirecting...' });
+        
+        // Redirect based on role
+        setTimeout(() => {
+          if (userData.role === 'buyer') navigate('/');
+          else navigate('/dashboard');
+        }, 1000);
       } else {
-        setAlert({ type: 'error', message: 'Invalid email or password. Please try again.' });
+        setAlert({ type: 'error', message: 'Invalid email or password.' });
         setLoading(false);
       }
-    }, 1000);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !loading) handleLogin();
+    }, 800);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: COLORS.primary }}>
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-surface-secondary relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-brand-green/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-brand-teal rounded-full blur-3xl pointer-events-none" />
+
+      <div className="w-full max-w-md relative z-10 animate-slide-up">
+        <div className="card p-8">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4" style={{ backgroundColor: COLORS.secondary }}>
-              <span className="text-3xl text-white">📦</span>
+            <div className="inline-flex items-center justify-center w-24 h-24 mb-4">
+              <img src="/logo.png" alt="MMPlaza Logo" className="w-full h-full object-contain" />
             </div>
-            <h1 className="text-3xl font-bold mb-2" style={{ color: COLORS.text }}>Welcome Back</h1>
-            <p className="text-gray-600">Sign in to ProductHub</p>
+            <h1 className="text-3xl font-bold font-display text-brand-text mb-2">Welcome Back</h1>
+            <p className="text-brand-muted">Sign in to MMPlaza ProductHub</p>
           </div>
 
           {alert && (
@@ -148,8 +87,8 @@ export default function LoginPage() {
             </Alert>
           )}
 
-          <div onKeyPress={handleKeyPress}>
-            <FormInput
+          <form onSubmit={handleLogin}>
+            <Input
               label="Email Address"
               type="email"
               name="email"
@@ -158,67 +97,74 @@ export default function LoginPage() {
               onChange={handleChange}
               error={errors.email}
               autoComplete="email"
-              icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" /></svg>}
             />
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2" style={{ color: COLORS.text }}>Password</label>
+            <div className="mb-2">
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-sm font-semibold text-brand-text">Password</label>
+                <a href="#" className="text-sm font-semibold text-brand-green hover:text-brand-green-dark transition-colors">
+                  Forgot Password?
+                </a>
+              </div>
               <div className="relative">
-                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                </div>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-12 py-3 rounded-lg border-2 transition-all focus:outline-none ${errors.password ? 'border-red-500' : 'border-gray-300 focus:border-[#00C853]'}`}
+                  className={`input-field pr-12 ${errors.password ? 'border-brand-error focus:border-brand-error focus:ring-brand-error/20' : ''}`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-brand-text transition-colors text-sm font-medium"
                 >
                   {showPassword ? 'Hide' : 'Show'}
                 </button>
               </div>
-              {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
+              {errors.password && <p className="mt-1.5 text-sm text-brand-error font-medium">{errors.password}</p>}
             </div>
 
-            <div className="flex items-center justify-between mb-6">
-              <label className="flex items-center cursor-pointer">
-                <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} className="rounded" style={{ accentColor: COLORS.secondary }} />
-                <span className="ml-2 text-sm text-gray-600">Remember me</span>
-              </label>
-              <a href="#" className="text-sm font-medium hover:underline" style={{ color: COLORS.secondary }}>Forgot password?</a>
-            </div>
-
-            <button
-              onClick={handleLogin}
-              disabled={loading}
-              className="w-full py-3 rounded-lg text-white font-semibold shadow-lg transition-opacity hover:opacity-90 disabled:opacity-50"
-              style={{ backgroundColor: COLORS.secondary }}
+            <Button
+              type="submit"
+              variant="primary"
+              fullWidth
+              loading={loading}
+              className="mt-6 py-3"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
-            </button>
-          </div>
+              Sign In
+            </Button>
+          </form>
 
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-300"></div></div>
-            <div className="relative flex justify-center text-sm"><span className="px-2 bg-white text-gray-500">Demo Credentials</span></div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 text-[10px]">
-            {MOCK_USERS.slice(0, 4).map(u => (
-               <div key={u.email} className="p-1 bg-gray-50 rounded border border-gray-200">
-                 <p className="font-bold truncate">{u.name}</p>
-                 <p className="text-gray-500 truncate">{u.email}</p>
-               </div>
-            ))}
+          {/* Quick Demo Login Helper */}
+          <div className="mt-8 border-t border-gray-100 pt-6">
+            <p className="text-xs font-semibold text-brand-muted uppercase tracking-wider text-center mb-4">
+              Demo Credentials
+            </p>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              {MOCK_USERS.slice(0, 4).map(u => (
+                <button
+                  key={u.email}
+                  onClick={() => setFormData({ email: u.email, password: u.password })}
+                  className="p-2 text-left bg-surface-secondary hover:bg-brand-green/5 border border-transparent hover:border-brand-green/20 rounded-lg transition-all"
+                >
+                  <p className="font-semibold text-brand-text truncate">{u.name}</p>
+                  <p className="text-brand-muted truncate mt-0.5">{u.role.replace('_', ' ')}</p>
+                </button>
+              ))}
+            </div>
+            
+            <div className="mt-2">
+              <button
+                onClick={() => setFormData({ email: 'buyer@example.com', password: 'buyer123' })}
+                className="w-full p-2 text-center bg-brand-teal/30 hover:bg-brand-teal/50 rounded-lg transition-all"
+              >
+                <p className="font-semibold text-brand-text text-xs">Test as Buyer</p>
+              </button>
+            </div>
           </div>
         </div>
-        <p className="text-center mt-4 text-xs text-gray-500">© 2026 ProductHub. All rights reserved.</p>
       </div>
     </div>
   );

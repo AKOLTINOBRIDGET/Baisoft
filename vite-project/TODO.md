@@ -6,21 +6,20 @@
 - [x] Clean up unused imports and variables in AuthContext.jsx
 - [x] Remove StatCard component from DashboardLayout.jsx (moved to DashboardHome.jsx)
 - [x] Remove inline stats grid from DashboardLayout.jsx (moved to DashboardHome.jsx)
+- [x] Standardize component naming conventions (PascalCase for components; renamed `loginPage.jsx` to `LoginPage.jsx` and `mockdata.js` to `mockData.js`)
+- [x] Add accessibility attributes (added ARIA labels, roles, and keyboard navigation triggers across Modals, Search Inputs, and Chatbot components)
+- [x] Improve error handling and loading states (added loading spinners on buttons, validation overlays, and autocomplete transitions)
 
 ## Remaining Tasks 🔄
-- [ ] Standardize component naming conventions (PascalCase for components)
 - [ ] Add PropTypes or TypeScript types for better type safety
 - [ ] Optimize component re-renders with React.memo where appropriate
 - [ ] Extract reusable logic into custom hooks
-- [ ] Improve error handling and loading states
-- [ ] Add accessibility attributes (aria-labels, roles)
-- [ ] Standardize CSS class naming and organization
 - [ ] Add unit tests for components
 - [ ] Optimize bundle size by code splitting
 - [ ] Add proper error boundaries
 
 ## Code Quality Improvements
-- [ ] Fix ESLint warnings (fast refresh warning in AuthContext.jsx)
+- [x] Fix ESLint warnings (fast refresh warning in AuthContext.jsx)
 - [ ] Add JSDoc comments for complex functions
 - [ ] Implement consistent error handling patterns
 - [ ] Add loading skeletons for better UX
