@@ -22,8 +22,8 @@ export const ProductCard = memo(({ product, onClick }) => {
         className="aspect-[4/3] bg-surface-secondary relative overflow-hidden flex items-center justify-center"
         onClick={() => onClick(product)}
       >
-        <div className="text-6xl transition-transform duration-500 group-hover:scale-110">
-          📦
+        <div className="w-24 h-24 transition-transform duration-500 group-hover:scale-110">
+          <img src="/logo.png" alt="Product Placeholder" className="w-full h-full object-contain opacity-30 grayscale" />
         </div>
         {product.featured && (
           <Badge variant="brand" className="absolute top-3 left-3 shadow-sm">
