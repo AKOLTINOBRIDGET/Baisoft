@@ -363,23 +363,10 @@ export default function StorefrontPage() {
         maxWidth="max-w-4xl"
       >
         {selectedProduct && (
-<<<<<<< HEAD
           <div className="flex flex-col md:flex-row gap-8">
             <div className="w-full md:w-1/2">
               <div className="aspect-square bg-surface-secondary rounded-2xl flex items-center justify-center relative overflow-hidden">
                 <img src="/logo.png" alt="Product Placeholder" className="w-1/2 h-1/2 object-contain opacity-30 grayscale" />
-=======
-          <div className="flex flex-col md:flex-row gap-8 items-start">
-            
-            {/* Left side Image preview */}
-            <div className="w-full md:w-1/2 flex-shrink-0">
-              <div className="aspect-[4/3] bg-surface-secondary rounded-2xl overflow-hidden flex items-center justify-center border border-gray-100 relative shadow-inner">
-                {selectedProduct.image ? (
-                  <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-full object-cover" />
-                ) : (
-                  <span className="text-8xl">📦</span>
-                )}
->>>>>>> e617697e4c274675b3e22e996a42b4c3ea5648d3
                 {selectedProduct.featured && (
                   <Badge variant="brand" className="absolute top-4 left-4 bg-brand-green font-bold text-xs uppercase shadow-md border-0 text-white">Featured</Badge>
                 )}

@@ -76,20 +76,9 @@ export const CartDrawer = () => {
           ) : (
             <div className="space-y-6">
               {items.map(item => (
-<<<<<<< HEAD
                 <div key={item.id} className="flex gap-4">
                   <div className="w-20 h-20 bg-surface-secondary rounded-lg flex items-center justify-center flex-shrink-0">
                     <img src="/logo.png" alt="Product Placeholder" className="w-10 h-10 object-contain opacity-30 grayscale" />
-=======
-                <div key={item.id} className="flex gap-4 border-b border-gray-50 pb-6 last:border-0 last:pb-0">
-                  {/* Thumbnail */}
-                  <div className="w-20 h-20 bg-surface-secondary rounded-xl overflow-hidden flex items-center justify-center border border-gray-100 flex-shrink-0 shadow-inner">
-                    {item.image ? (
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="text-2xl">📦</span>
-                    )}
->>>>>>> e617697e4c274675b3e22e996a42b4c3ea5648d3
                   </div>
 
                   {/* Item Description */}

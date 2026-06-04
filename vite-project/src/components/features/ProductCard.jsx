@@ -23,26 +23,9 @@ export const ProductCard = memo(({ product, onClick }) => {
         className="aspect-[4/3] bg-surface-secondary relative overflow-hidden flex items-center justify-center"
         onClick={() => onClick(product)}
       >
-<<<<<<< HEAD
         <div className="w-24 h-24 transition-transform duration-500 group-hover:scale-110">
           <img src="/logo.png" alt="Product Placeholder" className="w-full h-full object-contain opacity-30 grayscale" />
         </div>
-=======
-        {product.image ? (
-          <img 
-            src={product.image} 
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-tr from-brand-green/5 to-brand-teal/20 flex items-center justify-center text-5xl">
-            📦
-          </div>
-        )}
-
-        {/* Featured Badge */}
->>>>>>> e617697e4c274675b3e22e996a42b4c3ea5648d3
         {product.featured && (
           <Badge variant="brand" className="absolute top-3 left-3 shadow-md bg-brand-green text-white font-bold tracking-wider text-[10px] px-2.5 py-0.5 rounded-full uppercase">
             Featured
