@@ -2,11 +2,11 @@
 // MOCK USERS - Admin/Vendor/Buyer Roles
 // ============================================
 export const MOCK_USERS = [
-  { email: 'superadmin@baisoft.com', password: 'admin123', role: 'super_admin', name: 'Alex Johnson', businessId: null },
-  { email: 'business@baisoft.com', password: 'business123', role: 'business_admin', name: 'Sarah Williams', businessId: 'biz-1', businessName: 'TechGear Pro' },
-  { email: 'editor@baisoft.com', password: 'editor123', role: 'editor', name: 'Michael Chen', businessId: 'biz-1', businessName: 'TechGear Pro' },
-  { email: 'approver@baisoft.com', password: 'approver123', role: 'approver', name: 'Emily Davis', businessId: 'biz-1', businessName: 'TechGear Pro' },
-  { email: 'viewer@baisoft.com', password: 'viewer123', role: 'viewer', name: 'James Wilson', businessId: 'biz-1', businessName: 'TechGear Pro' },
+  { email: 'superadmin@mmplaza.com', password: 'admin123', role: 'super_admin', name: 'Alex Johnson', businessId: null },
+  { email: 'business@mmplaza.com', password: 'business123', role: 'business_admin', name: 'Sarah Williams', businessId: 'biz-1', businessName: 'TechGear Pro' },
+  { email: 'editor@mmplaza.com', password: 'editor123', role: 'editor', name: 'Michael Chen', businessId: 'biz-1', businessName: 'TechGear Pro' },
+  { email: 'approver@mmplaza.com', password: 'approver123', role: 'approver', name: 'Emily Davis', businessId: 'biz-1', businessName: 'TechGear Pro' },
+  { email: 'viewer@mmplaza.com', password: 'viewer123', role: 'viewer', name: 'James Wilson', businessId: 'biz-1', businessName: 'TechGear Pro' },
   { email: 'buyer@example.com', password: 'buyer123', role: 'buyer', name: 'Lisa Anderson', businessId: null },
 ];
 

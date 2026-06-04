@@ -72,13 +72,9 @@ export const Navbar = () => {
       <div className="page-container h-16 flex items-center justify-between gap-4">
         
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-brand-green/10 text-brand-green flex items-center justify-center font-bold shadow-xs">
-            <span className="text-lg">🛍️</span>
-          </div>
-          <span className="font-extrabold font-display text-xl tracking-tight text-brand-text">
-            Product<span className="text-brand-green">Hub</span>
-          </span>
+        <Link to="/" className="flex items-center gap-2">
+          <img src="/logo.png" alt="MMPlaza Logo" className="w-8 h-8 object-contain" />
+          <span className="font-bold font-display text-xl tracking-tight">ProductHub</span>
         </Link>
 
         {/* Advanced Search Bar - Desktop */}
@@ -197,8 +193,8 @@ export const Navbar = () => {
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-2 border-l border-gray-100 pl-3 sm:pl-4">
-              <Button variant="ghost" size="xs" onClick={() => navigate('/login')} className="rounded-full text-xs">Sign In</Button>
+            <div className="flex items-center gap-2 ml-2 border-l border-gray-200 pl-4">
+              <Button variant="ghost" size="sm" onClick={() => navigate('/splash')}>Sign In</Button>
             </div>
           )}
         </div>
