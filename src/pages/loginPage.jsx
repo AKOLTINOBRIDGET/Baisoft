@@ -22,6 +22,17 @@ export default function LoginPage() {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+    setAlert(null);
+    if (!formData.email.trim()) {
+      setErrors({ email: 'Email is required to reset password' });
+      setAlert({ type: 'error', message: 'Please enter your email address first.' });
+      return;
+    }
+    setAlert({ type: 'success', message: `A password reset link has been sent to ${formData.email}.` });
+  };
+
   const validateForm = () => {
     const newErrors = {};
     if (!formData.email.trim()) newErrors.email = 'Email is required';
@@ -102,9 +113,13 @@ export default function LoginPage() {
             <div className="mb-2">
               <div className="flex justify-between items-center mb-2">
                 <label className="block text-sm font-semibold text-brand-text">Password</label>
-                <a href="#" className="text-sm font-semibold text-brand-green hover:text-brand-green-dark transition-colors">
+                <button
+                  type="button"
+                  onClick={handleForgotPassword}
+                  className="text-sm font-semibold text-brand-green hover:text-brand-green-dark transition-colors outline-none"
+                >
                   Forgot Password?
-                </a>
+                </button>
               </div>
               <div className="relative">
                 <input

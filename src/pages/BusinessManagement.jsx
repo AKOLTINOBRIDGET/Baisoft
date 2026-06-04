@@ -6,6 +6,7 @@ import { Card } from '../components/ui/Card';
 import { Input } from '../components/ui/Input';
 import BusinessForm from '../components/features/BusinessForm';
 import { MOCK_BUSINESSES } from '../data/mockData';
+import { Search, AlertTriangle } from 'lucide-react';
 
 export default function BusinessManagement() {
   const [businesses, setBusinesses] = useState(MOCK_BUSINESSES);
@@ -79,7 +80,7 @@ export default function BusinessManagement() {
               placeholder="Search by name or owner..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              icon="🔍"
+              icon={<Search className="w-5 h-5 text-brand-muted" />}
               className="mb-0"
             />
           </div>
@@ -151,7 +152,7 @@ export default function BusinessManagement() {
 
       <Modal isOpen={!!showDeleteConfirm} onClose={() => setShowDeleteConfirm(null)} title="Confirm Delete">
         <div className="flex items-center gap-4 text-red-500 mb-6 bg-red-50 p-4 rounded-xl">
-          <span className="text-2xl">⚠️</span>
+          <AlertTriangle className="w-6 h-6 text-red-500 shrink-0" />
           <p className="font-semibold text-sm text-red-800">Are you sure you want to delete this business? This action cannot be undone.</p>
         </div>
         <div className="flex gap-4 justify-end">

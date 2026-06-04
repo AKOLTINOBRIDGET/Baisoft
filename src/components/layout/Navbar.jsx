@@ -4,6 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
 import { Button } from '../ui/Button';
 import { MOCK_PRODUCTS, CATEGORIES } from '../../data/mockData';
+import { Search, ShoppingCart, X, Package } from 'lucide-react';
 
 export const Navbar = () => {
   const { user, logout } = useAuth();
@@ -109,9 +110,9 @@ export const Navbar = () => {
                 <button 
                   type="button" 
                   onClick={() => setSearchQuery('')}
-                  className="text-gray-400 hover:text-brand-text text-xs pr-2"
+                  className="text-gray-400 hover:text-brand-text pr-2 flex items-center"
                 >
-                  ✕
+                  <X className="w-4 h-4" />
                 </button>
               )}
             </div>
@@ -122,7 +123,7 @@ export const Navbar = () => {
               className="bg-brand-green text-white hover:bg-brand-green-dark px-6 flex items-center justify-center transition-colors"
               aria-label="Search button"
             >
-              🔍
+              <Search className="w-4 h-4" />
             </button>
           </form>
 
@@ -140,7 +141,7 @@ export const Navbar = () => {
                     {product.image ? (
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                     ) : (
-                      <span className="text-xl">📦</span>
+                      <Package className="w-5 h-5 text-brand-muted" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -160,19 +161,19 @@ export const Navbar = () => {
           {/* Mobile Search Toggle Button */}
           <button 
             onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
-            className="md:hidden p-2 text-gray-600 hover:text-brand-green hover:bg-brand-green/5 rounded-full transition-colors"
+            className="md:hidden p-2 text-gray-600 hover:text-brand-green hover:bg-brand-green/5 rounded-full transition-colors flex items-center justify-center"
             aria-label="Toggle mobile search"
           >
-            {mobileSearchOpen ? '✕' : '🔍'}
+            {mobileSearchOpen ? <X className="w-5 h-5" /> : <Search className="w-5 h-5" />}
           </button>
 
           {/* Cart Icon */}
           <button 
             onClick={() => setIsDrawerOpen(true)}
-            className="relative p-2 text-gray-600 hover:text-brand-green hover:bg-brand-green/5 rounded-full transition-colors"
+            className="relative p-2 text-gray-600 hover:text-brand-green hover:bg-brand-green/5 rounded-full transition-colors flex items-center justify-center"
             aria-label="Open cart"
           >
-            <span className="text-xl">🛒</span>
+            <ShoppingCart className="w-5 h-5" />
             {itemCount > 0 && (
               <span className="absolute top-0 right-0 w-5 h-5 bg-brand-green text-white text-[10px] font-extrabold flex items-center justify-center rounded-full border-2 border-white shadow-xs">
                 {itemCount}
@@ -215,7 +216,7 @@ export const Navbar = () => {
               type="submit" 
               className="bg-brand-green text-white px-5 flex items-center justify-center"
             >
-              🔍
+              <Search className="w-4 h-4" />
             </button>
           </form>
         </div>

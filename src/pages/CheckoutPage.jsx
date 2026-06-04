@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card } from '../components/ui/Card';
+import { ArrowLeft, ArrowRight, CreditCard, Smartphone, ShieldCheck, Bell, Package } from 'lucide-react';
 
 export default function CheckoutPage() {
   const { items, total, subtotal, tax, clearCart } = useCart();
@@ -19,6 +20,7 @@ export default function CheckoutPage() {
   const [step, setStep] = useState('shipping');
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
+  const [momoPhone, setMomoPhone] = useState('');
   
   // Shipping states
   const [formData, setFormData] = useState({
@@ -44,7 +46,7 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-surface-secondary text-center font-sans">
-        <span className="text-6xl mb-4">🛒</span>
+        <Package className="w-16 h-16 text-brand-muted mb-4 opacity-50" />
         <h2 className="text-2xl font-black text-brand-text mb-2">Your checkout cart is empty</h2>
         <p className="text-sm text-brand-muted mb-6">Add items from the store to proceed with secure payment.</p>
         <Button className="rounded-full font-bold uppercase tracking-wider text-xs px-6 py-3" onClick={() => navigate('/')}>Return to Storefront</Button>
@@ -64,15 +66,41 @@ export default function CheckoutPage() {
     return Object.keys(errors).length === 0;
   };
 
+  const validatePayment = () => {
+    const errors = {};
+    if (paymentMethod === 'card') {
+      const cleanedNumber = cardData.number.replace(/\s/g, '');
+      if (cleanedNumber.length !== 16) {
+        errors.cardNumber = 'Card number must be 16 digits';
+      }
+      if (!/^\d{2}\/\d{2}$/.test(cardData.expiry)) {
+        errors.cardExpiry = 'Expiry date must be MM/YY';
+      }
+      if (cardData.cvc.length < 3) {
+        errors.cardCvc = 'CVC must be at least 3 digits';
+      }
+    } else if (paymentMethod === 'momo') {
+      if (!momoPhone.trim() || momoPhone.length < 8) {
+        errors.momoPhone = 'Please enter a valid mobile money number';
+      }
+    }
+    
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleNextStep = (e) => {
     e.preventDefault();
     if (validateShipping()) {
+      setFormErrors({});
       setStep('payment');
     }
   };
 
   const handleCheckout = (e) => {
     e.preventDefault();
+    if (!validatePayment()) return;
+    
     setLoading(true);
     // Simulate API secure payment processing
     setTimeout(() => {
@@ -93,11 +121,11 @@ export default function CheckoutPage() {
       parts.push(match.substring(i, i + 4));
     }
 
-    if (parts.length > 0) {
-      setCardData({ ...cardData, number: parts.join(' ') });
-    } else {
-      setCardData({ ...cardData, number: value });
-    }
+    setCardData({ 
+      ...cardData, 
+      number: parts.length > 0 ? parts.join(' ') : value 
+    });
+    if (formErrors.cardNumber) setFormErrors({...formErrors, cardNumber: ''});
   };
 
   // Expiry Formatter (MM/YY)
@@ -108,6 +136,7 @@ export default function CheckoutPage() {
       value = `${value.slice(0, 2)}/${value.slice(2)}`;
     }
     setCardData({ ...cardData, expiry: value });
+    if (formErrors.cardExpiry) setFormErrors({...formErrors, cardExpiry: ''});
   };
 
   const finalTotal = Math.max(0, total - initialDiscount);
@@ -121,7 +150,7 @@ export default function CheckoutPage() {
           onClick={() => step === 'payment' ? setStep('shipping') : navigate(-1)} 
           className="text-xs font-bold text-brand-muted hover:text-brand-text mb-6 flex items-center gap-1.5 transition-colors uppercase tracking-wider outline-none"
         >
-          ← {step === 'payment' ? 'Back to Shipping' : 'Back to Store'}
+          <ArrowLeft className="w-3.5 h-3.5" /> {step === 'payment' ? 'Back to Shipping' : 'Back to Store'}
         </button>
 
         {/* Checkout Header and Progress Tracker */}
@@ -134,7 +163,7 @@ export default function CheckoutPage() {
           {/* Progress Tracker (Amazon Inspired) */}
           <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-brand-muted">
             <span className={`px-3 py-1.5 rounded-full ${step === 'shipping' ? 'bg-brand-green text-white shadow-green' : 'bg-green-100 text-brand-green'}`}>1. Shipping</span>
-            <span className="text-gray-300">➔</span>
+            <ArrowRight className="w-3.5 h-3.5 text-gray-300" />
             <span className={`px-3 py-1.5 rounded-full ${step === 'payment' ? 'bg-brand-green text-white shadow-green' : 'bg-gray-200 text-gray-500'}`}>2. Payment</span>
           </div>
         </div>
@@ -266,27 +295,33 @@ export default function CheckoutPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                   <button
                     type="button"
-                    onClick={() => setPaymentMethod('card')}
-                    className={`p-4 rounded-xl border-2 text-left transition-all ${
+                    onClick={() => {
+                      setPaymentMethod('card');
+                      setFormErrors({});
+                    }}
+                    className={`p-4 rounded-xl border-2 text-left transition-all flex flex-col items-start ${
                       paymentMethod === 'card' 
                         ? 'border-brand-green bg-brand-green/5' 
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    <span className="block text-2xl mb-1.5">💳</span>
+                    <CreditCard className="w-6 h-6 mb-1.5 text-brand-green" />
                     <span className="font-bold text-xs uppercase tracking-wider block text-brand-text">Credit/Debit Card</span>
                     <span className="text-[10px] text-brand-muted font-medium mt-0.5 block">Visa, MasterCard, Amex</span>
                   </button>
                   <button
                     type="button"
-                    onClick={() => setPaymentMethod('momo')}
-                    className={`p-4 rounded-xl border-2 text-left transition-all ${
+                    onClick={() => {
+                      setPaymentMethod('momo');
+                      setFormErrors({});
+                    }}
+                    className={`p-4 rounded-xl border-2 text-left transition-all flex flex-col items-start ${
                       paymentMethod === 'momo' 
                         ? 'border-brand-green bg-brand-green/5' 
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    <span className="block text-2xl mb-1.5">📱</span>
+                    <Smartphone className="w-6 h-6 mb-1.5 text-brand-green" />
                     <span className="font-bold text-xs uppercase tracking-wider block text-brand-text">Mobile Money</span>
                     <span className="text-[10px] text-brand-muted font-medium mt-0.5 block">MTN Momo, Airtel Money</span>
                   </button>
@@ -301,6 +336,7 @@ export default function CheckoutPage() {
                         placeholder="4111 2222 3333 4444" 
                         value={cardData.number}
                         onChange={handleCardNumberChange}
+                        error={formErrors.cardNumber}
                         required 
                       />
                       <div className="grid grid-cols-3 gap-4">
@@ -310,6 +346,7 @@ export default function CheckoutPage() {
                             placeholder="MM/YY" 
                             value={cardData.expiry}
                             onChange={handleExpiryChange}
+                            error={formErrors.cardExpiry}
                             required 
                           />
                         </div>
@@ -320,7 +357,11 @@ export default function CheckoutPage() {
                             type="password"
                             maxLength="4"
                             value={cardData.cvc}
-                            onChange={e => setCardData({...cardData, cvc: e.target.value.replace(/\D/g, '')})}
+                            onChange={e => {
+                              setCardData({...cardData, cvc: e.target.value.replace(/\D/g, '')});
+                              if (formErrors.cardCvc) setFormErrors({...formErrors, cardCvc: ''});
+                            }}
+                            error={formErrors.cardCvc}
                             required 
                           />
                         </div>
@@ -330,9 +371,21 @@ export default function CheckoutPage() {
 
                   {paymentMethod === 'momo' && (
                     <div className="space-y-4 animate-fade-in">
-                      <Input label="Mobile Number" placeholder="e.g. +233 24 000 0000" type="tel" required />
-                      <div className="bg-surface-secondary p-4 rounded-xl text-xs font-semibold text-brand-muted border border-gray-100">
-                        🔔 You will receive a secure authorization prompt on your mobile device to complete this transaction.
+                      <Input 
+                        label="Mobile Number" 
+                        placeholder="e.g. 024 000 0000" 
+                        type="tel" 
+                        value={momoPhone}
+                        onChange={e => {
+                          setMomoPhone(e.target.value.replace(/\D/g, ''));
+                          if (formErrors.momoPhone) setFormErrors({...formErrors, momoPhone: ''});
+                        }}
+                        error={formErrors.momoPhone}
+                        required 
+                      />
+                      <div className="bg-surface-secondary p-4 rounded-xl text-xs font-semibold text-brand-muted border border-gray-100 flex items-start gap-2">
+                        <Bell className="w-4 h-4 text-brand-muted shrink-0 mt-0.5" />
+                        <span>You will receive a secure authorization prompt on your mobile device to complete this transaction.</span>
                       </div>
                     </div>
                   )}
@@ -341,9 +394,9 @@ export default function CheckoutPage() {
                     <button 
                       type="button" 
                       onClick={() => setStep('shipping')}
-                      className="text-xs font-bold text-brand-muted hover:text-brand-text uppercase tracking-wider transition-colors"
+                      className="text-xs font-bold text-brand-muted hover:text-brand-text uppercase tracking-wider transition-colors flex items-center gap-1"
                     >
-                      ← Back
+                      <ArrowLeft className="w-3.5 h-3.5" /> Back
                     </button>
                     <Button 
                       type="submit" 
@@ -373,7 +426,7 @@ export default function CheckoutPage() {
                         {item.image ? (
                           <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                         ) : (
-                          <span>📦</span>
+                          <Package className="w-4 h-4 text-brand-muted" />
                         )}
                       </div>
                       <div className="min-w-0">
@@ -415,7 +468,7 @@ export default function CheckoutPage() {
 
             {/* Secure connection trust banner */}
             <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center flex flex-col items-center shadow-xs">
-              <span className="text-brand-green text-3xl mb-2">🛡️</span>
+              <ShieldCheck className="w-8 h-8 text-brand-green mb-2" />
               <p className="font-extrabold text-xs text-brand-text uppercase tracking-wider">SSL Secure Checkouts</p>
               <p className="text-[11px] text-brand-muted leading-relaxed mt-1 max-w-xs font-medium">
                 Your credentials are encrypted and securely sent directly to our multi-tenant payment gateways. We never cache or store card information.

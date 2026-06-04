@@ -1,30 +1,31 @@
 import { useNavigate } from 'react-router-dom';
+import { BarChart2, Building2, Package, ShoppingBag, Users, X } from 'lucide-react';
 
 export default function Sidebar({ isOpen, onClose, user, currentPath }) {
   const navigate = useNavigate();
 
   const getNavigationItems = () => {
-    const common = [{ id: 'dashboard', label: 'Dashboard', icon: '📊', path: '/dashboard' }];
+    const common = [{ id: 'dashboard', label: 'Dashboard', icon: <BarChart2 className="w-5 h-5" />, path: '/dashboard' }];
     const roleItems = {
       super_admin: [
-        { id: 'businesses', label: 'Businesses', icon: '🏢', path: '/businesses' },
-        { id: 'products', label: 'Products', icon: '📦', path: '/products' },
-        { id: 'orders', label: 'Orders', icon: '🛍️', path: '/orders' },
-        { id: 'users', label: 'Users', icon: '👥', path: '/users' },
+        { id: 'businesses', label: 'Businesses', icon: <Building2 className="w-5 h-5" />, path: '/businesses' },
+        { id: 'products', label: 'Products', icon: <Package className="w-5 h-5" />, path: '/products' },
+        { id: 'orders', label: 'Orders', icon: <ShoppingBag className="w-5 h-5" />, path: '/orders' },
+        { id: 'users', label: 'Users', icon: <Users className="w-5 h-5" />, path: '/users' },
       ],
       business_admin: [
-        { id: 'products', label: 'Products', icon: '📦', path: '/products' },
-        { id: 'orders', label: 'Orders', icon: '🛍️', path: '/orders' },
-        { id: 'users', label: 'Users', icon: '👥', path: '/users' },
+        { id: 'products', label: 'Products', icon: <Package className="w-5 h-5" />, path: '/products' },
+        { id: 'orders', label: 'Orders', icon: <ShoppingBag className="w-5 h-5" />, path: '/orders' },
+        { id: 'users', label: 'Users', icon: <Users className="w-5 h-5" />, path: '/users' },
       ],
       editor: [
-        { id: 'products', label: 'Products', icon: '📦', path: '/products' },
+        { id: 'products', label: 'Products', icon: <Package className="w-5 h-5" />, path: '/products' },
       ],
       approver: [
-        { id: 'products', label: 'Products', icon: '📦', path: '/products' },
+        { id: 'products', label: 'Products', icon: <Package className="w-5 h-5" />, path: '/products' },
       ],
       buyer: [
-        { id: 'orders', label: 'My Orders', icon: '🛍️', path: '/orders' },
+        { id: 'orders', label: 'My Orders', icon: <ShoppingBag className="w-5 h-5" />, path: '/orders' },
       ]
     };
     return [...common, ...(roleItems[user?.role] || [])];
@@ -49,10 +50,8 @@ export default function Sidebar({ isOpen, onClose, user, currentPath }) {
             <img src="/logo.png" alt="MMPlaza Logo" className="w-8 h-8 object-contain" />
             <h2 className="text-xl font-bold font-display text-brand-text">ProductHub</h2>
           </div>
-          <button onClick={onClose} className="lg:hidden text-brand-muted hover:text-brand-text">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+          <button onClick={onClose} className="lg:hidden text-brand-muted hover:text-brand-text flex items-center justify-center">
+            <X className="w-6 h-6" />
           </button>
         </div>
 

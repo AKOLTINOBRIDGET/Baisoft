@@ -8,6 +8,30 @@ import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { useCart } from '../contexts/CartContext';
 import { AIChatbot } from '../components/features/AIChatbot';
+import { 
+  SlidersHorizontal, 
+  Search, 
+  ShieldCheck, 
+  Laptop, 
+  Shirt, 
+  Coffee, 
+  Sparkles, 
+  Flame, 
+  Home as HomeIcon, 
+  BookOpen, 
+  LayoutGrid 
+} from 'lucide-react';
+
+const CATEGORY_ICONS = {
+  all: LayoutGrid,
+  electronics: Laptop,
+  fashion: Shirt,
+  food: Coffee,
+  beauty: Sparkles,
+  sports: Flame,
+  home: HomeIcon,
+  books: BookOpen,
+};
 
 const CATEGORY_GRADIENTS = {
   all: 'from-gray-100 to-gray-200 text-gray-700',
@@ -172,10 +196,13 @@ export default function StorefrontPage() {
                   }}
                   className="flex flex-col items-center gap-2 text-center group shrink-0 transition-transform active:scale-95 outline-none"
                 >
-                  <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-2xl sm:text-3xl shadow-sm group-hover:scale-110 group-hover:shadow-md transition-all duration-300 relative ${
+                  <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:shadow-md transition-all duration-300 relative ${
                     isSelected ? 'ring-4 ring-brand-green ring-offset-2 scale-105' : 'border border-gray-100'
                   }`}>
-                    {category.icon}
+                    {(() => {
+                      const IconComponent = CATEGORY_ICONS[category.id] || LayoutGrid;
+                      return <IconComponent className={`w-6 h-6 sm:w-7 sm:h-7 ${isSelected ? 'text-brand-green' : 'text-brand-text group-hover:text-brand-green'}`} />;
+                    })()}
                   </div>
                   <span className={`text-xs font-bold tracking-tight transition-colors duration-200 ${
                     isSelected ? 'text-brand-green' : 'text-brand-text group-hover:text-brand-green'
@@ -314,10 +341,10 @@ export default function StorefrontPage() {
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="lg:hidden rounded-full font-bold uppercase tracking-wider"
+                className="lg:hidden rounded-full font-bold uppercase tracking-wider flex items-center gap-1.5"
                 onClick={() => setFilterDrawerOpen(true)}
               >
-                ⚙️ Filters
+                <SlidersHorizontal className="w-3.5 h-3.5" /> Filters
               </Button>
             </div>
 
@@ -336,9 +363,9 @@ export default function StorefrontPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm p-8">
-                <span className="text-6xl mb-4 block opacity-60">🔍</span>
-                <h3 className="text-xl font-bold mb-1">No products fit your search</h3>
+              <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm p-8 flex flex-col items-center justify-center">
+                <Search className="w-14 h-14 mb-4 text-brand-muted opacity-60" />
+                <h3 className="text-xl font-bold mb-1 text-brand-text">No products fit your search</h3>
                 <p className="text-brand-muted text-sm max-w-sm mx-auto">Try clearing price ranges, ratings, or category filters to expand results.</p>
                 <Button variant="outline" className="mt-6 rounded-full font-extrabold tracking-wider" onClick={handleClearFilters}>
                   Clear All Filters
@@ -366,7 +393,15 @@ export default function StorefrontPage() {
           <div className="flex flex-col md:flex-row gap-8">
             <div className="w-full md:w-1/2">
               <div className="aspect-square bg-surface-secondary rounded-2xl flex items-center justify-center relative overflow-hidden">
-                <img src="/logo.png" alt="Product Placeholder" className="w-1/2 h-1/2 object-contain opacity-30 grayscale" />
+                <img 
+                  src={selectedProduct.image || "/logo.png"} 
+                  alt={selectedProduct.name} 
+                  className={`w-full h-full ${selectedProduct.image ? 'object-cover' : 'w-1/2 h-1/2 object-contain opacity-30 grayscale'}`}
+                  onError={(e) => {
+                    e.target.src = '/logo.png';
+                    e.target.className = 'w-1/2 h-1/2 object-contain opacity-30 grayscale';
+                  }}
+                />
                 {selectedProduct.featured && (
                   <Badge variant="brand" className="absolute top-4 left-4 bg-brand-green font-bold text-xs uppercase shadow-md border-0 text-white">Featured</Badge>
                 )}
@@ -438,7 +473,9 @@ export default function StorefrontPage() {
                       {selectedProduct.description}
                     </p>
                     <div className="bg-surface-secondary/50 p-4 rounded-2xl border border-gray-100 text-xs text-brand-muted leading-relaxed">
-                      <span className="font-bold block text-brand-text mb-1">💼 Multi-Tenant Vendor Guarantees:</span>
+                      <span className="font-bold text-brand-text mb-1.5 flex items-center gap-1.5 text-xs">
+                        <ShieldCheck className="w-4 h-4 text-brand-green" /> Multi-Tenant Vendor Guarantees:
+                      </span>
                       Purchased items are directly shipped and managed by <span className="font-bold text-brand-green">{selectedProduct.business}</span>. Secured transaction checkout is backed by SSL connections.
                     </div>
                   </div>

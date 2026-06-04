@@ -1,5 +1,16 @@
 import { useAuth } from '../contexts/AuthContext';
 import { Card } from '../components/ui/Card';
+import { 
+  Building2, 
+  Users, 
+  Package, 
+  DollarSign, 
+  ShoppingBag, 
+  Heart, 
+  TrendingUp, 
+  Crown, 
+  Sparkles 
+} from 'lucide-react';
 
 export default function DashboardHome() {
   const { user } = useAuth();
@@ -13,16 +24,18 @@ export default function DashboardHome() {
               <div className="absolute top-[-30%] right-[-10%] w-60 h-60 bg-brand-green/20 rounded-full blur-3xl pointer-events-none" />
               <div className="relative z-10">
                 <Badge variant="brand" className="bg-brand-green/20 text-brand-green font-bold text-[10px] uppercase border border-brand-green/20 mb-3">System Administrator</Badge>
-                <h3 className="text-2xl sm:text-3xl font-black font-display mb-2">Super Admin Console 👑</h3>
+                <h3 className="text-2xl sm:text-3xl font-black font-display mb-2 flex items-center gap-2">
+                  Super Admin Console <Crown className="w-6.5 h-6.5 text-amber-400 fill-amber-400 animate-pulse" />
+                </h3>
                 <p className="text-sm text-gray-300 max-w-xl">Global marketplace health, multi-tenant vendor approval workflows, and system audit logs are accessible below.</p>
               </div>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <StatCard title="Total Businesses" value="12" icon="🏢" sparkline={[3, 5, 4, 8, 7, 9, 12]} trend="2 pending approval" trendUp />
-              <StatCard title="System Users" value="156" icon="👥" sparkline={[120, 130, 125, 140, 138, 145, 156]} trend="12 new this week" trendUp />
-              <StatCard title="Total Products" value="1,247" icon="📦" sparkline={[900, 950, 1020, 1100, 1150, 1200, 1247]} trend="+8% from last month" trendUp />
-              <StatCard title="Total Revenue" value="$45,230" icon="💰" sparkline={[20000, 25000, 32000, 28000, 39000, 41000, 45230]} trend="+15% from last month" trendUp />
+              <StatCard title="Total Businesses" value="12" icon={<Building2 className="w-5 h-5 text-brand-green" />} sparkline={[3, 5, 4, 8, 7, 9, 12]} trend="2 pending approval" trendUp />
+              <StatCard title="System Users" value="156" icon={<Users className="w-5 h-5 text-blue-500" />} sparkline={[120, 130, 125, 140, 138, 145, 156]} trend="12 new this week" trendUp />
+              <StatCard title="Total Products" value="1,247" icon={<Package className="w-5 h-5 text-amber-500" />} sparkline={[900, 950, 1020, 1100, 1150, 1200, 1247]} trend="+8% from last month" trendUp />
+              <StatCard title="Total Revenue" value="$45,230" icon={<DollarSign className="w-5 h-5 text-emerald-500" />} sparkline={[20000, 25000, 32000, 28000, 39000, 41000, 45230]} trend="+15% from last month" trendUp />
             </div>
 
             {/* Quick Analytics meters */}
@@ -53,15 +66,17 @@ export default function DashboardHome() {
             <div className="mb-8 bg-gradient-to-r from-brand-green/10 to-brand-teal/20 p-6 sm:p-8 rounded-3xl relative overflow-hidden border border-brand-green/10 shadow-xs">
               <div className="relative z-10">
                 <span className="bg-brand-green/20 text-brand-green font-extrabold text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded-full border border-brand-green/20 mb-3 inline-block">Vendor Dashboard</span>
-                <h3 className="text-2xl sm:text-3xl font-black font-display text-brand-text mb-2">Welcome back to {user.businessName}! 🏢</h3>
+                <h3 className="text-2xl sm:text-3xl font-black font-display text-brand-text mb-2 flex items-center gap-2">
+                  Welcome back to {user.businessName}! <Building2 className="w-6.5 h-6.5 text-brand-green" />
+                </h3>
                 <p className="text-sm text-brand-muted max-w-xl">Configure inventory settings, add items to the storefront, and fulfill pending client purchases.</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              <StatCard title="My Products" value="128" icon="📦" sparkline={[120, 122, 125, 124, 126, 127, 128]} trend="4 pending approval" />
-              <StatCard title="Total Orders" value="45" icon="🛍️" sparkline={[10, 18, 25, 22, 34, 40, 45]} trend="12 new today" trendUp />
-              <StatCard title="Monthly Revenue" value="$12,450" icon="💰" sparkline={[5000, 6500, 8000, 7800, 9900, 11000, 12450]} trend="+22% from last month" trendUp />
+              <StatCard title="My Products" value="128" icon={<Package className="w-5 h-5 text-brand-green" />} sparkline={[120, 122, 125, 124, 126, 127, 128]} trend="4 pending approval" />
+              <StatCard title="Total Orders" value="45" icon={<ShoppingBag className="w-5 h-5 text-blue-500" />} sparkline={[10, 18, 25, 22, 34, 40, 45]} trend="12 new today" trendUp />
+              <StatCard title="Monthly Revenue" value="$12,450" icon={<DollarSign className="w-5 h-5 text-emerald-500" />} sparkline={[5000, 6500, 8000, 7800, 9900, 11000, 12450]} trend="+22% from last month" trendUp />
             </div>
 
             {/* Business Progress Trackers */}
@@ -92,12 +107,14 @@ export default function DashboardHome() {
         return (
           <>
             <div className="mb-8">
-              <h3 className="text-2xl sm:text-3xl font-black font-display text-brand-text mb-2">Welcome Back, {user.name.split(' ')[0]} 👋</h3>
+              <h3 className="text-2xl sm:text-3xl font-black font-display text-brand-text mb-2 flex items-center gap-2">
+                Welcome Back, {user.name.split(' ')[0]} <Sparkles className="w-6 h-6 text-brand-green animate-pulse" />
+              </h3>
               <p className="text-brand-muted text-sm">Track your recent orders, review saved products, and adjust credentials.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <StatCard title="Total Orders Placed" value="5" icon="🛍️" sparkline={[1, 2, 2, 3, 4, 5, 5]} trend="View history" />
-              <StatCard title="Saved Favorites" value="12" icon="❤️" sparkline={[5, 8, 7, 9, 11, 10, 12]} trend="2 items currently on sale" />
+              <StatCard title="Total Orders Placed" value="5" icon={<ShoppingBag className="w-5 h-5 text-brand-green" />} sparkline={[1, 2, 2, 3, 4, 5, 5]} trend="View history" />
+              <StatCard title="Saved Favorites" value="12" icon={<Heart className="w-5 h-5 text-red-500 fill-red-500" />} sparkline={[5, 8, 7, 9, 11, 10, 12]} trend="2 items currently on sale" />
             </div>
           </>
         );
@@ -106,12 +123,14 @@ export default function DashboardHome() {
         return (
           <>
             <div className="mb-8">
-              <h3 className="text-2xl sm:text-3xl font-black font-display text-brand-text mb-2">Welcome back to your Overview 👋</h3>
+              <h3 className="text-2xl sm:text-3xl font-black font-display text-brand-text mb-2 flex items-center gap-2">
+                Welcome back to your Overview <Sparkles className="w-6 h-6 text-brand-green" />
+              </h3>
               <p className="text-brand-muted text-sm">Monitor approval lists, track active items, and examine recent updates.</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <StatCard title="Approved Products" value="89" icon="📦" sparkline={[80, 82, 85, 84, 87, 88, 89]} trend="Updated daily" />
-              <StatCard title="Recent Activity" value="23" icon="📈" sparkline={[10, 15, 14, 18, 20, 22, 23]} trend="Actions last 24 hours" />
+              <StatCard title="Approved Products" value="89" icon={<Package className="w-5 h-5 text-brand-green" />} sparkline={[80, 82, 85, 84, 87, 88, 89]} trend="Updated daily" />
+              <StatCard title="Recent Activity" value="23" icon={<TrendingUp className="w-5 h-5 text-blue-500" />} sparkline={[10, 15, 14, 18, 20, 22, 23]} trend="Actions last 24 hours" />
             </div>
           </>
         );
@@ -159,10 +178,12 @@ const Sparkline = ({ points = [], trendUp = false }) => {
 };
 
 const StatCard = ({ title, value, icon, trend, trendUp, sparkline = [] }) => (
-  <Card hoverable padding="md" className="p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all">
+  <Card hoverable padding="md" className="p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full">
     <div className="flex items-center justify-between mb-4">
       <h3 className="font-extrabold text-[10px] text-brand-muted uppercase tracking-widest">{title}</h3>
-      <span className="text-2xl">{icon}</span>
+      <div className="p-2 bg-surface-secondary rounded-lg">
+        {icon}
+      </div>
     </div>
     
     <div className="flex items-end justify-between">

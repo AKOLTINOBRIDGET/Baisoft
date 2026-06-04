@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import Sidebar from '../components/layout/Sidebar';
 import DashboardWrapper from '../components/DashboardWrapper';
+import { Menu, Store, User, LogOut } from 'lucide-react';
 
 export default function DashboardLayout() {
   const { user, logout } = useAuth();
@@ -30,11 +31,9 @@ export default function DashboardLayout() {
             <div className="flex items-center space-x-4">
               <button 
                 onClick={() => setSidebarOpen(true)} 
-                className="lg:hidden p-2 rounded-lg text-brand-muted hover:bg-surface-secondary hover:text-brand-text transition-colors"
+                className="lg:hidden p-2 rounded-lg text-brand-muted hover:bg-surface-secondary hover:text-brand-text transition-colors flex items-center justify-center"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <Menu className="w-6 h-6" />
               </button>
               <h1 className="text-xl font-bold font-display capitalize text-brand-text">
                 {pageTitle}
@@ -48,7 +47,7 @@ export default function DashboardLayout() {
                 onClick={() => navigate('/')}
                 className="hidden sm:flex items-center gap-2 text-sm font-semibold text-brand-green bg-brand-green/10 hover:bg-brand-green/20 px-4 py-2 rounded-lg transition-colors"
               >
-                <span>🏪</span> View Storefront
+                <Store className="w-4 h-4" /> View Storefront
               </button>
 
               {/* User Dropdown */}
@@ -74,15 +73,15 @@ export default function DashboardLayout() {
                         <p className="text-xs text-brand-muted truncate">{user?.email}</p>
                       </div>
                       <div className="p-1">
-                        <button className="w-full text-left px-4 py-2 text-sm font-medium text-brand-text rounded-lg hover:bg-surface-secondary transition-colors">
-                          👤 My Profile
+                        <button className="w-full text-left px-4 py-2 text-sm font-medium text-brand-text rounded-lg hover:bg-surface-secondary transition-colors flex items-center gap-2">
+                          <User className="w-4 h-4 text-brand-muted" /> My Profile
                         </button>
                         <div className="h-px bg-gray-100 my-1" />
                         <button 
                           onClick={logout} 
-                          className="w-full text-left px-4 py-2 text-sm font-bold text-brand-error rounded-lg hover:bg-red-50 transition-colors"
+                          className="w-full text-left px-4 py-2 text-sm font-bold text-brand-error rounded-lg hover:bg-red-50 transition-colors flex items-center gap-2"
                         >
-                          🚪 Sign Out
+                          <LogOut className="w-4 h-4 text-brand-error" /> Sign Out
                         </button>
                       </div>
                     </div>
